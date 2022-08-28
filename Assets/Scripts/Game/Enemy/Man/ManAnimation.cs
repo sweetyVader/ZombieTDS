@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace TDS.Game.Enemy
+namespace TDS.Game.Enemy.Man
 {
-    public class EnemyAnimation : MonoBehaviour
+    public class ManAnimation : MonoBehaviour
     {
         #region Variables
 
@@ -18,7 +18,7 @@ namespace TDS.Game.Enemy
             _animator.SetTrigger("Shoot");
         }
 
-        public void EnemyDead()
+        public void ManDead()
         {
             _animator.SetTrigger("Dead");
         }

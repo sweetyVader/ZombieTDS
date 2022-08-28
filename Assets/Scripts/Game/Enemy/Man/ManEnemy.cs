@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace TDS.Game.Enemy
+namespace TDS.Game.Enemy.Man
 {
-    public class Enemy : MonoBehaviour
+    public class ManEnemy : MonoBehaviour
     {
         #region Variables
 
-        [SerializeField] private EnemyAnimation _enemyAnimation;
+        [SerializeField] private ManAnimation manAnimation;
         [SerializeField] private int _hp = 100;
 
         #endregion
@@ -31,8 +31,8 @@ namespace TDS.Game.Enemy
             Destroy(col.gameObject);
             if (_hp <= 0)
             {
-                _enemyAnimation.EnemyDead();
                 IsDead = true;
+                manAnimation.ManDead();
             }
             else
                 _hp -= 10;

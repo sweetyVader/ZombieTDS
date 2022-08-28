@@ -1,26 +1,22 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace TDS.Game.Enemy.Man
+namespace TDS.Game.Enemy.Zombie
 {
-    public class ManAttack : MonoBehaviour
+    public class ZombieAttack : MonoBehaviour
     {
         #region Variables
 
-        [SerializeField] private ManAnimation _manAnimation;
-        [SerializeField] private ManEnemy manEnemy;
-        [SerializeField] private GameObject _bulletPrefab;
-        [SerializeField] private Transform _bulletSpawnPosition;
-        [SerializeField] private float _fireDelay = 0.3f;
+        [SerializeField] private ZombieAnimation _zombieAnimation;
+        [SerializeField] private ZombieEnemy _zombieEnemy;
+        [SerializeField] private float _speed = 4f;
         [SerializeField] private float _shootTime = 3f;
         [SerializeField] private float _shootDistance;
         
         private Player.Player _player;
         private Transform _cachedTransform;
         private float _currentPlayerPosition;
-        private float _timer;
-        private bool _isShoot;
-
+       
         #endregion
 
 
@@ -29,25 +25,28 @@ namespace TDS.Game.Enemy.Man
         private void Awake()
         {
             _cachedTransform = transform;
-            // StartCoroutine(ShootTimer());
             _player = FindObjectOfType<Player.Player>();
         }
 
         private void Update()
         {
-            if (manEnemy.IsDead || _player.IsDead)
+            if (_zombieEnemy.IsDead || _player.IsDead)
                 return;
+
 
             _currentPlayerPosition = Vector2.Distance(transform.position, _player.transform.position);
 
             if (_currentPlayerPosition <= _shootDistance)
             {
                 Rotate();
-                if (_timer <= 0)
-                    Attack();
+                GoToPlayer();
             }
+        }
 
-            TickTimer();
+        private void OnCollisionEnter2D(Collision2D col)
+        {
+            if (col.gameObject.CompareTag(Tags.Player))
+                Attack();
         }
 
         #endregion
@@ -75,16 +74,15 @@ namespace TDS.Game.Enemy.Man
             _cachedTransform.up = direction;
         }
 
-        private void Attack()
+        private void GoToPlayer()
         {
-            _manAnimation.PlayShoot();
-            Instantiate(_bulletPrefab, _bulletSpawnPosition.position, _cachedTransform.rotation);
-            _timer = _fireDelay;
+            _cachedTransform.position = Vector2.MoveTowards(_cachedTransform.position,
+                _player.transform.position, _speed * Time.deltaTime);
         }
 
-        private void TickTimer()
+        private void Attack()
         {
-            _timer -= Time.deltaTime;
+            _zombieAnimation.PlayAttack();
         }
 
         #endregion

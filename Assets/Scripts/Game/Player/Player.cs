@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace TDS.Game.Player
 {
@@ -11,7 +10,7 @@ namespace TDS.Game.Player
         [SerializeField] private PlayerAnimation _playerAnimation;
         [SerializeField] private int _hp = 100;
 
-        private float _timer;
+        private Vector3 _startPosition;
 
         #endregion
 
@@ -25,29 +24,39 @@ namespace TDS.Game.Player
 
         #region Unity lifecycle
 
-        private void Update()
+        protected override void Awake()
         {
-            if (IsDead)
-            {
-                PlayerDead();
-            }
-
-            TickTimer();
+            base.Awake();
+            _startPosition = transform.position;
         }
 
         private void OnCollisionEnter2D(Collision2D col)
         {
-            if (!col.gameObject.CompareTag(Tags.EnemyBullet))
-                return;
-            Destroy(col.gameObject);
-            if (_hp <= 0)
+            switch (col.gameObject.tag)
             {
-                IsDead = true;
-                _playerAnimation.PlayerDead(IsDead);
-                _timer = 15f;
+                case Tags.Health:
+                    _hp += 40;
+                    Destroy(col.gameObject);
+                    break;
+                case Tags.EnemyBullet:
+                    _hp -= 10;
+                    Destroy(col.gameObject);
+                    break;
+                case Tags.Zombie:
+                    _hp -= 20;
+                    break;
             }
-            else
-                _hp -= 10;
+
+            CheckHealth();
+        }
+
+        private void CheckHealth()
+        {
+            if (_hp > 0)
+                return;
+            IsDead = true;
+            _playerAnimation.PlayerDead(IsDead);
+            StartCoroutine(ReloadScene());
         }
 
         #endregion
@@ -55,23 +64,19 @@ namespace TDS.Game.Player
 
         #region Private methods
 
-        private void PlayerDead()
-        {
-            if (_timer < 0)
-                GameOver();
-        }
-
         private void GameOver()
         {
             SceneLoader.Instance.ReloadCurrentScene();
             IsDead = false;
             _playerAnimation.PlayerDead(IsDead);
             _hp = 100;
+            transform.position = _startPosition;
         }
 
-        private void TickTimer()
+        IEnumerator ReloadScene()
         {
-            _timer -= Time.deltaTime;
+            yield return new WaitForSeconds(5f);
+            GameOver();
         }
 
         #endregion
