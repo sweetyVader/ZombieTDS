@@ -4,12 +4,18 @@ namespace TDS.Game.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private PlayerAnimation _playerAnimation;
-        
         [SerializeField] private float _speed = 4f;
 
         private Transform _cachedTransform;
         private Camera _mainCamera;
+
+        #endregion
+
+
+        #region Unity lifecycle
 
         private void Awake()
         {
@@ -19,20 +25,27 @@ namespace TDS.Game.Player
 
         private void Update()
         {
+            if (Player.Instance.IsDead)
+                return;
+
             Move();
             Rotate();
         }
 
+        #endregion
+
+
+        #region Private methods
+
         private void Move()
         {
-            
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
 
             Vector2 direction = new Vector2(horizontal, vertical);
             Vector3 moveDelta = direction * (_speed * Time.deltaTime);
             _cachedTransform.position += moveDelta;
-            
+
             _playerAnimation.SetSpeed(direction.magnitude);
         }
 
@@ -45,5 +58,7 @@ namespace TDS.Game.Player
             Vector3 direction = worldPoint - _cachedTransform.position;
             _cachedTransform.up = direction;
         }
+
+        #endregion
     }
 }

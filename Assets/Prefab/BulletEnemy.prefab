@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 6660281733002653535}
   - component: {fileID: 2525277030489922000}
   - component: {fileID: -8719733802378625831}
-  - component: {fileID: 3351285312601427377}
-  m_Layer: 8
-  m_Name: Bullet
-  m_TagString: Bullet
+  - component: {fileID: -915007202007439774}
+  m_Layer: 9
+  m_Name: BulletEnemy
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _lifeTime: 3
---- !u!61 &3351285312601427377
+--- !u!61 &-915007202007439774
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,7 +83,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.015333049, y: -0.08433175}
+  m_Offset: {x: -0.015333042, y: -0.114997804}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -94,7 +94,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.24868084, y: 1.1073313}
+  m_Size: {x: 0.23334786, y: 1.1379973}
   m_EdgeRadius: 0
 --- !u!1 &3319556395707153593
 GameObject:
@@ -106,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7986376966371412635}
   - component: {fileID: 3435599989626877764}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

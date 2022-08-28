@@ -4,14 +4,20 @@ namespace TDS.Game.Player
 {
     public class PlayerAttack : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private PlayerAnimation _playerAnimation;
-        
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _bulletSpawnPosition;
         [SerializeField] private float _fireDelay = 0.3f;
 
         private Transform _cachedTransform;
         private float _timer;
+
+        #endregion
+
+
+        #region Unity lifecycle
 
         private void Awake()
         {
@@ -20,14 +26,24 @@ namespace TDS.Game.Player
 
         private void Update()
         {
+            if (Player.Instance.IsDead)
+                return;
+
             if (CanAttack())
                 Attack();
 
             TickTimer();
         }
 
+        #endregion
+
+
+        #region Private methods
+
         private bool CanAttack()
         {
+            if (Player.Instance.IsDead)
+                return false;
             return Input.GetButton("Fire1") && _timer <= 0;
         }
 
@@ -42,5 +58,7 @@ namespace TDS.Game.Player
         {
             _timer -= Time.deltaTime;
         }
+
+        #endregion
     }
 }
