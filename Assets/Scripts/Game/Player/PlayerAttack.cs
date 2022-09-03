@@ -6,6 +6,8 @@ namespace TDS.Game.Player
     {
         #region Variables
 
+        [SerializeField] private Player _player;
+
         [SerializeField] private PlayerAnimation _playerAnimation;
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _bulletSpawnPosition;
@@ -26,7 +28,7 @@ namespace TDS.Game.Player
 
         private void Update()
         {
-            if (Player.Instance.IsDead)
+            if (_player.IsDead)
                 return;
 
             if (CanAttack())
@@ -42,7 +44,7 @@ namespace TDS.Game.Player
 
         private bool CanAttack()
         {
-            if (Player.Instance.IsDead)
+            if (_player.IsDead)
                 return false;
             return Input.GetButton("Fire1") && _timer <= 0;
         }

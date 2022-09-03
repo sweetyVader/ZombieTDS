@@ -6,6 +6,8 @@ namespace TDS.Game.Player
     {
         #region Variables
 
+        [SerializeField] private Player _player;
+        
         [SerializeField] private PlayerAnimation _playerAnimation;
         [SerializeField] private float _speed = 4f;
 
@@ -25,7 +27,7 @@ namespace TDS.Game.Player
 
         private void Update()
         {
-            if (Player.Instance.IsDead)
+            if (_player.IsDead)
                 return;
 
             Move();

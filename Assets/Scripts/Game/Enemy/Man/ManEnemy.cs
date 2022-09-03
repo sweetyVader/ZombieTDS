@@ -29,13 +29,13 @@ namespace TDS.Game.Enemy.Man
             if (!col.gameObject.CompareTag(Tags.Bullet))
                 return;
             Destroy(col.gameObject);
-            if (_hp <= 0)
-            {
-                IsDead = true;
-                manAnimation.ManDead();
-            }
-            else
-                _hp -= 10;
+            _hp -= 10;
+            if (_hp > 0)
+                return;
+            IsDead = true;
+            manAnimation.ManDead();
+
+
         }
 
         #endregion

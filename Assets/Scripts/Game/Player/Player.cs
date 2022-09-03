@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TDS.Game.Player
 {
-    public class Player : SingletonMonoBehaviour<Player>
+    public class Player : MonoBehaviour
     {
         #region Variables
 
@@ -24,9 +24,9 @@ namespace TDS.Game.Player
 
         #region Unity lifecycle
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
+           
             _startPosition = transform.position;
         }
 
