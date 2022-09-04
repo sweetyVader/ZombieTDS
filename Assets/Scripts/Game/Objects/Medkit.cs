@@ -16,12 +16,11 @@ namespace TDS.Game.Objects
 
         private void OnCollisionEnter2D(Collision2D col)
         {
-            if (col.gameObject.CompareTag(Tags.Player))
-            {
-                Destroy(gameObject);
-                _playerHp.ApplyHeal(_heal);
-            }
-                
+            if (!col.gameObject.CompareTag(Tags.Player))
+                return;
+            Destroy(gameObject);
+            _playerHp.ApplyHeal(_heal);
+
         }
     }
 }
