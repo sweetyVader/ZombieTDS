@@ -4,6 +4,8 @@ namespace TDS.Game.Objects
 {
     public class Explosive : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private int _damage = 15;
         [SerializeField] private float _radius = 10;
 
@@ -11,6 +13,11 @@ namespace TDS.Game.Objects
 
         private float _timer;
         private bool _isExplosed;
+
+        #endregion
+
+
+        #region Unity lifecycle
 
         private void Update()
         {
@@ -34,6 +41,11 @@ namespace TDS.Game.Objects
             Explode();
         }
 
+        #endregion
+
+
+        #region Private methods
+
         private void Explode()
         {
             Collider2D[] colliders = Physics2D.OverlapCircleAll(Vector3.zero, _radius);
@@ -50,5 +62,7 @@ namespace TDS.Game.Objects
 
         private void TickTimer() =>
             _timer -= Time.deltaTime;
+
+        #endregion
     }
 }

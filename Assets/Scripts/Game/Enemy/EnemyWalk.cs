@@ -4,6 +4,8 @@ namespace TDS.Game.Enemy
 {
     public class EnemyWalk : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private float _speed = 2;
         [SerializeField] private Transform _pointA;
         [SerializeField] private Transform _pointB;
@@ -15,11 +17,16 @@ namespace TDS.Game.Enemy
         private Vector3 _goToPointA;
         private Vector3 _goToPointB;
 
+        #endregion
+
+
+        #region Unity lifecycle
+
         private void Awake()
         {
             _goToPointA = _pointA.position;
             _goToPointB = _pointB.position;
-                _cachedTransform = transform;
+            _cachedTransform = transform;
         }
 
         private void Update()
@@ -27,6 +34,11 @@ namespace TDS.Game.Enemy
             Patrol();
             TickTimer();
         }
+
+        #endregion
+
+
+        #region Private methods
 
         private void Patrol()
         {
@@ -46,6 +58,7 @@ namespace TDS.Game.Enemy
             _direction = !_direction;
             _timer = _waitTimer;
         }
+
         private void RotateToPoint(Vector3 point)
         {
             point.z = 0f;
@@ -56,5 +69,7 @@ namespace TDS.Game.Enemy
 
         private void TickTimer() =>
             _timer -= Time.deltaTime;
+
+        #endregion
     }
 }

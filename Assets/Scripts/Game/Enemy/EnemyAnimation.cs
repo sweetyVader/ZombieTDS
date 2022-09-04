@@ -22,7 +22,7 @@ namespace TDS.Game.Enemy
         {
             _animator.SetTrigger("Attack");
         }
-        
+
         public void EnemyDead()
         {
             _animator.SetTrigger("Dead");

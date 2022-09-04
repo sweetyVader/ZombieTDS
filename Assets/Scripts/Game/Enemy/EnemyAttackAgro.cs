@@ -4,12 +4,19 @@ namespace TDS.Game.Enemy
 {
     public class EnemyAttackAgro : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private TriggerObserver _triggerObserver;
         [SerializeField] private EnemyAttack _attack;
         [SerializeField] private EnemyMovement _enemyMovement;
-        
 
         private bool _isInRange;
+
+        #endregion
+
+
+        #region Unity lifecycle
+
         private void Start()
         {
             _triggerObserver.OnEntered += OnEntered;
@@ -33,5 +40,7 @@ namespace TDS.Game.Enemy
             _isInRange = true;
             _enemyMovement.enabled = true;
         }
+
+        #endregion
     }
 }

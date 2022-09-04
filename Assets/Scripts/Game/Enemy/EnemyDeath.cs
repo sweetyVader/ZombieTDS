@@ -1,19 +1,25 @@
-﻿using System.Collections;
-using TDS.Game.Player;
+﻿using TDS.Game.Player;
 using UnityEngine;
 
 namespace TDS.Game.Enemy
 {
     public class EnemyDeath : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private EnemyHp _enemyHp;
         [SerializeField] private EnemyAnimation _enemyAnimation;
         [SerializeField] private EnemyMovement _enemyMovement;
         [SerializeField] private EnemyAttack _enemyAttack;
         [SerializeField] private EnemyAttackWithGun _enemyAttackWithGun;
+        [SerializeField] private EnemyWalk _enemyWalk;
+        [SerializeField] private EnemyMoveToPlayer _enemyMoveToPlayer;
+
         [SerializeField] private EnemyHp _hp;
 
         private PlayerAttack _playerAttack;
+
+        #endregion
 
 
         #region Properties
@@ -23,11 +29,18 @@ namespace TDS.Game.Enemy
         #endregion
 
 
+        #region Unity lifecycle
+
         private void Start()
         {
             _enemyHp.OnChanged += OnHpChanged;
             _playerAttack = FindObjectOfType<PlayerAttack>();
         }
+
+        #endregion
+
+
+        #region Private methods
 
         private void OnHpChanged(int hp)
         {
@@ -37,14 +50,15 @@ namespace TDS.Game.Enemy
             IsDead = true;
             _enemyAnimation.EnemyDead();
             _enemyMovement.enabled = false;
+            _enemyWalk.enabled = false;
+
             if (_enemyAttack != null)
                 _enemyAttack.enabled = false;
-            else if (_enemyAttackWithGun != null)
+            if (_enemyAttackWithGun != null)
                 _enemyAttackWithGun.enabled = false;
+            if (_enemyMoveToPlayer != null)
+                _enemyMoveToPlayer.enabled = false;
         }
-
-
-        #region Private methods
 
         private void OnCollisionEnter2D(Collision2D col)
         {

@@ -1,15 +1,21 @@
-﻿using System;
-using TDS.Game.Player;
+﻿using TDS.Game.Player;
 using UnityEngine;
 
 namespace TDS.Game.Enemy
 {
     public class EnemyMoveToPlayer : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private EnemyMovement _enemyMovement;
         [SerializeField] private TriggerObserver _triggerObserver;
 
         private Transform _playerTransform;
+
+        #endregion
+
+
+        #region Unity lifecycle
 
         private void Start()
         {
@@ -28,9 +34,16 @@ namespace TDS.Game.Enemy
             SetTarget(null);
         }
 
+        #endregion
+
+
+        #region Private methods
+
         private void SetTarget(Transform target)
         {
             _enemyMovement.SetTarget(target);
         }
+
+        #endregion
     }
 }

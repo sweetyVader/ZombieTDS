@@ -1,19 +1,25 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TDS.Game.Enemy
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class EnemyMovement : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private EnemyWalk _enemyWalk;
-        
+
         [SerializeField] private EnemyAnimation _enemyAnimation;
         [SerializeField] private float _speed = 4;
 
         private Transform _target;
         private Rigidbody2D _rb;
         private Transform _cachedTransform;
+
+        #endregion
+
+
+        #region Unity lifecycle
 
         private void Awake()
         {
@@ -31,11 +37,15 @@ namespace TDS.Game.Enemy
             RotateToTarget();
         }
 
-        
         private void OnDisable()
         {
             SetVelocity(Vector2.zero);
         }
+
+        #endregion
+
+
+        #region Public methods
 
         public void SetTarget(Transform target)
         {
@@ -48,12 +58,18 @@ namespace TDS.Game.Enemy
             }
         }
 
+        #endregion
+
+
+        #region Private methods
+
         private void MoveToTarget()
         {
             Vector3 direction = (_target.position - _cachedTransform.position).normalized;
             SetVelocity(direction * _speed);
             _enemyAnimation.SetSpeed(_speed);
         }
+
         private void RotateToTarget()
         {
             Vector3 targetPosition = _target.transform.position;
@@ -68,5 +84,7 @@ namespace TDS.Game.Enemy
 
         private void SetVelocity(Vector2 velocity) =>
             _rb.velocity = velocity;
+
+        #endregion
     }
 }

@@ -6,12 +6,16 @@ namespace TDS.Game.Player
 {
     public class PlayerDeath : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private PlayerHp _playerHp;
         [SerializeField] private PlayerAnimation _playerAnimation;
         [SerializeField] private PlayerMovement _playerMovement;
         [SerializeField] private PlayerAttack _playerAttack;
 
         private EnemyAttackWithGun _enemyAttackWithGun;
+
+        #endregion
 
 
         #region Properties
@@ -21,11 +25,25 @@ namespace TDS.Game.Player
         #endregion
 
 
+        #region Unity lifecycle
+
         private void Start()
         {
             _enemyAttackWithGun = FindObjectOfType<EnemyAttackWithGun>();
             _playerHp.OnChanged += OnHpChanged;
         }
+
+        #endregion
+
+
+        IEnumerator ReloadScene()
+        {
+            yield return new WaitForSeconds(5f);
+            GameOver();
+        }
+
+
+        #region Private methods
 
         private void OnHpChanged(int hp)
         {
@@ -38,15 +56,6 @@ namespace TDS.Game.Player
             _playerAttack.enabled = false;
             StartCoroutine(ReloadScene());
         }
-
-        IEnumerator ReloadScene()
-        {
-            yield return new WaitForSeconds(5f);
-            GameOver();
-        }
-
-
-        #region Private methods
 
         private void GameOver()
         {

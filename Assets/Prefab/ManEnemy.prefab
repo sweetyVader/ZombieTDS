@@ -120,6 +120,8 @@ MonoBehaviour:
   _enemyMovement: {fileID: 3192132490115690471}
   _enemyAttack: {fileID: 0}
   _enemyAttackWithGun: {fileID: -2126251402865955466}
+  _enemyWalk: {fileID: 2199436509349617269}
+  _enemyMoveToPlayer: {fileID: 0}
   _hp: {fileID: 4319221244637380606}
 --- !u!114 &4319221244637380606
 MonoBehaviour:
@@ -168,6 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65d890d19f84291985ce1b5cdd68c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyWalk: {fileID: 0}
   _enemyAnimation: {fileID: 3037246424039566876}
   _speed: 4
 --- !u!114 &2199436509349617269

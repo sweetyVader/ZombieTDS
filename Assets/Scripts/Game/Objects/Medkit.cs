@@ -5,9 +5,16 @@ namespace TDS.Game.Objects
 {
     public class Medkit : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private int _heal = 50;
-        
+
         private PlayerHp _playerHp;
+
+        #endregion
+
+
+        #region Unity lifecycle
 
         private void Start()
         {
@@ -20,7 +27,8 @@ namespace TDS.Game.Objects
                 return;
             Destroy(gameObject);
             _playerHp.ApplyHeal(_heal);
-
         }
+
+        #endregion
     }
 }

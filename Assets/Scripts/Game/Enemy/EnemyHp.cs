@@ -14,7 +14,11 @@ namespace TDS.Game.Enemy
         #endregion
 
 
+        #region Events
+
         public event Action<int> OnChanged;
+
+        #endregion
 
 
         #region Properties
