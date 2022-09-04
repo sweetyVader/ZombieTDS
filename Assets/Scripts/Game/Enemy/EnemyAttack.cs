@@ -7,7 +7,6 @@ namespace TDS.Game.Enemy
     {
         [SerializeField] private int _damage = 20;
         [SerializeField] private EnemyAnimation _enemyAnimation;
-        
         [SerializeField] private float _attackDelay;
         [SerializeField] private Transform _attackPoint;
         [SerializeField] private float _radius;
@@ -26,8 +25,7 @@ namespace TDS.Game.Enemy
                 InternalAttack();
         }
 
-        public void TickTimer() =>
-            _timer -= Time.deltaTime;
+        
 
         private void InternalAttack()
         {
@@ -44,5 +42,8 @@ namespace TDS.Game.Enemy
 
         private bool CanAttack() =>
             _timer <= 0;
+        
+        private void TickTimer() =>
+            _timer -= Time.deltaTime;
     }
 }

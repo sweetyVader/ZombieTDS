@@ -6,6 +6,8 @@ namespace TDS.Game.Enemy
     [RequireComponent(typeof(Rigidbody2D))]
     public class EnemyMovement : MonoBehaviour
     {
+        [SerializeField] private EnemyWalk _enemyWalk;
+        
         [SerializeField] private EnemyAnimation _enemyAnimation;
         [SerializeField] private float _speed = 4;
 
@@ -24,6 +26,7 @@ namespace TDS.Game.Enemy
             if (!IsTargetValid())
                 return;
 
+            _enemyWalk.enabled = false;
             MoveToTarget();
             RotateToTarget();
         }
@@ -39,7 +42,10 @@ namespace TDS.Game.Enemy
             _target = target;
 
             if (target == null)
+            {
+                _enemyWalk.enabled = true;
                 SetVelocity(Vector2.zero);
+            }
         }
 
         private void MoveToTarget()

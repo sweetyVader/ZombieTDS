@@ -12,6 +12,8 @@ namespace TDS.Game.Enemy
 
         [SerializeField] private EnemyAnimation _enemyAnimation;
         [SerializeField] private EnemyDeath _enemyDeath;
+        [SerializeField] private EnemyWalk _enemyWalk;
+        
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _bulletSpawnPosition;
         [SerializeField] private float _fireDelay = 0.3f;
@@ -24,7 +26,7 @@ namespace TDS.Game.Enemy
         private Transform _cachedTransform;
         private float _currentPlayerPosition;
         private float _timer;
-        private bool _isShoot;
+       
 
         #endregion
 
@@ -52,11 +54,14 @@ namespace TDS.Game.Enemy
 
             if (_currentPlayerPosition <= _shootDistance)
             {
+                _enemyWalk.enabled = false;
                 Rotate();
                 if (_timer <= 0)
                     Attack();
             }
 
+            
+            _enemyWalk.enabled = true;
             TickTimer();
         }
 
@@ -87,6 +92,7 @@ namespace TDS.Game.Enemy
 
         private void Attack()
         {
+           
             _enemyAnimation.PlayShoot();
             Instantiate(_bulletPrefab, _bulletSpawnPosition.position, _cachedTransform.rotation);
             _timer = _fireDelay;
