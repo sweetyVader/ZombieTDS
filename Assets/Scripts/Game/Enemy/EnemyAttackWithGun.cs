@@ -1,52 +1,63 @@
 ﻿using System.Collections;
+using TDS.Game.Player;
 using UnityEngine;
 
-namespace TDS.Game.Enemy.Zombie
+namespace TDS.Game.Enemy
 {
-    public class ZombieAttack : MonoBehaviour
+    public class EnemyAttackWithGun : MonoBehaviour
     {
         #region Variables
 
-        [SerializeField] private ZombieAnimation _zombieAnimation;
-        [SerializeField] private ZombieEnemy _zombieEnemy;
-        [SerializeField] private float _speed = 4f;
+        private PlayerDeath _playerDeath;
+
+        [SerializeField] private EnemyAnimation _enemyAnimation;
+        [SerializeField] private EnemyDeath _enemyDeath;
+        [SerializeField] private GameObject _bulletPrefab;
+        [SerializeField] private Transform _bulletSpawnPosition;
+        [SerializeField] private float _fireDelay = 0.3f;
         [SerializeField] private float _shootTime = 3f;
         [SerializeField] private float _shootDistance;
-        
-        private Player.Player _player;
+        [SerializeField] private int _damage = 15;
+
+        private PlayerHp _player;
+
         private Transform _cachedTransform;
         private float _currentPlayerPosition;
-       
+        private float _timer;
+        private bool _isShoot;
+
         #endregion
+
+
+        public int DamageGun { get; private set; }
 
 
         #region Unity lifecycle
 
         private void Awake()
         {
+            DamageGun = _damage;
             _cachedTransform = transform;
-            _player = FindObjectOfType<Player.Player>();
+            // StartCoroutine(ShootTimer());
+            _player = FindObjectOfType<PlayerHp>();
+            _playerDeath = FindObjectOfType<PlayerDeath>();
         }
 
         private void Update()
         {
-            if (_zombieEnemy.IsDead || _player.IsDead)
+            if (_enemyDeath.IsDead || _playerDeath.IsDead)
                 return;
-
 
             _currentPlayerPosition = Vector2.Distance(transform.position, _player.transform.position);
 
             if (_currentPlayerPosition <= _shootDistance)
             {
                 Rotate();
-                GoToPlayer();
+                if (_timer <= 0)
+                    Attack();
             }
-        }
 
-        private void OnCollisionEnter2D(Collision2D col)
-        {
-            if (col.gameObject.CompareTag(Tags.Player))
-                Attack();
+            TickTimer();
         }
 
         #endregion
@@ -74,15 +85,16 @@ namespace TDS.Game.Enemy.Zombie
             _cachedTransform.up = direction;
         }
 
-        private void GoToPlayer()
-        {
-            _cachedTransform.position = Vector2.MoveTowards(_cachedTransform.position,
-                _player.transform.position, _speed * Time.deltaTime);
-        }
-
         private void Attack()
         {
-            _zombieAnimation.PlayAttack();
+            _enemyAnimation.PlayShoot();
+            Instantiate(_bulletPrefab, _bulletSpawnPosition.position, _cachedTransform.rotation);
+            _timer = _fireDelay;
+        }
+
+        private void TickTimer()
+        {
+            _timer -= Time.deltaTime;
         }
 
         #endregion
