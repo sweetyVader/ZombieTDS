@@ -8,6 +8,7 @@ TagManager:
   - EnemyBullet
   - Health
   - Zombie
+  - Enemy
   layers:
   - Default
   - TransparentFX

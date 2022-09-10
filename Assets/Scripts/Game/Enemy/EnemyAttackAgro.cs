@@ -17,10 +17,16 @@ namespace TDS.Game.Enemy
 
         #region Unity lifecycle
 
-        private void Start()
+        private void OnEnable()
         {
             _triggerObserver.OnEntered += OnEntered;
             _triggerObserver.OnExited += OnExited;
+        }
+
+        private void OnDisable()
+        {
+            _triggerObserver.OnEntered -= OnEntered;
+            _triggerObserver.OnExited -= OnExited;
         }
 
         private void Update()
@@ -37,7 +43,7 @@ namespace TDS.Game.Enemy
 
         private void OnExited(Collider2D col)
         {
-            _isInRange = true;
+            _isInRange = false;
             _enemyMovement.enabled = true;
         }
 

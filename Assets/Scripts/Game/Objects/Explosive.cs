@@ -30,7 +30,7 @@ namespace TDS.Game.Objects
         private void OnTriggerEnter2D(Collider2D col)
         {
             if (col.gameObject.CompareTag(Tags.Bullet) || col.gameObject.CompareTag(Tags.EnemyBullet) ||
-                col.gameObject.CompareTag(Tags.Zombie) || col.gameObject.CompareTag(Tags.Player))
+                col.gameObject.CompareTag(Tags.Enemy) || col.gameObject.CompareTag(Tags.Player))
 
                 if (col.gameObject.CompareTag(Tags.Bullet) || col.gameObject.CompareTag(Tags.EnemyBullet))
                     Destroy(col);
@@ -48,7 +48,7 @@ namespace TDS.Game.Objects
 
         private void Explode()
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(Vector3.zero, _radius);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _radius);
 
             foreach (Collider2D col in colliders)
             {

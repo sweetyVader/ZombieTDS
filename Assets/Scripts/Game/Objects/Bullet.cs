@@ -27,6 +27,13 @@ namespace TDS.Game.Objects
             StartCoroutine(LifeTimeTimer());
         }
 
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.gameObject.CompareTag(Tags.Player) || col.gameObject.CompareTag(Tags.Enemy))
+                Destroy(gameObject);
+                
+        }
+
         #endregion
 
 

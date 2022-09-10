@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TDS.Game.Enemy;
 using UnityEngine;
 
@@ -64,15 +65,12 @@ namespace TDS.Game.Player
             _playerAnimation.PlayerDead(IsDead);
         }
 
-        private void OnCollisionEnter2D(Collision2D col)
+        private void OnTriggerEnter2D(Collider2D col)
         {
             if (IsDead)
                 return;
 
-            if (!col.gameObject.CompareTag(Tags.EnemyBullet))
-                return;
-
-            Destroy(col.gameObject);
+            
 
             if (_playerHp.CurrentHp > 0)
                 _playerHp.ApplyDamage(_enemyAttackWithGun.DamageGun);

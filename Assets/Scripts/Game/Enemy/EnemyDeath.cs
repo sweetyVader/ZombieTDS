@@ -1,4 +1,5 @@
-﻿using TDS.Game.Player;
+﻿using System;
+using TDS.Game.Player;
 using UnityEngine;
 
 namespace TDS.Game.Enemy
@@ -11,9 +12,10 @@ namespace TDS.Game.Enemy
         [SerializeField] private EnemyAnimation _enemyAnimation;
         [SerializeField] private EnemyMovement _enemyMovement;
         [SerializeField] private EnemyAttack _enemyAttack;
-        [SerializeField] private EnemyAttackWithGun _enemyAttackWithGun;
+        [SerializeField] private EnemyAttackAgro _enemyAttackAgro;
         [SerializeField] private EnemyWalk _enemyWalk;
         [SerializeField] private EnemyMoveToPlayer _enemyMoveToPlayer;
+        [SerializeField] private Rigidbody2D _rb;
 
         [SerializeField] private EnemyHp _hp;
 
@@ -51,24 +53,19 @@ namespace TDS.Game.Enemy
             _enemyAnimation.EnemyDead();
             _enemyMovement.enabled = false;
             _enemyWalk.enabled = false;
+            _enemyAttackAgro.enabled = false;
+            _enemyAttack.enabled = false;
 
-            if (_enemyAttack != null)
-                _enemyAttack.enabled = false;
-            if (_enemyAttackWithGun != null)
-                _enemyAttackWithGun.enabled = false;
+           
             if (_enemyMoveToPlayer != null)
                 _enemyMoveToPlayer.enabled = false;
         }
 
-        private void OnCollisionEnter2D(Collision2D col)
+        private void OnTriggerEnter2D(Collider2D col)
         {
             if (IsDead)
                 return;
 
-            if (!col.gameObject.CompareTag(Tags.Bullet))
-                return;
-
-            Destroy(col.gameObject);
 
             if (_hp.CurrentHp > 0)
             {
