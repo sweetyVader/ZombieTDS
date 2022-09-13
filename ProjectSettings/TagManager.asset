@@ -9,6 +9,7 @@ TagManager:
   - Health
   - Zombie
   - Enemy
+  - Barrel
   layers:
   - Default
   - TransparentFX
@@ -45,4 +46,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3997965389
+    locked: 0
+  - name: Object
+    uniqueID: 1036528641
+    locked: 0
+  - name: EnemyAndHero
+    uniqueID: 4268352009
     locked: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TDS.Game.Enemy
 {
-    public abstract class EnemyAttack : MonoBehaviour
+    public abstract class EnemyAttack : EnemyBehaviour
     {
         #region Variables
 
@@ -28,9 +28,16 @@ namespace TDS.Game.Enemy
         #endregion
 
 
+        protected override void OnUpdate()
+        {
+            base.OnUpdate();
+            Attack();
+        }
+
+
         #region Public methods
 
-        public void Attack()
+        private void Attack()
         {
             if (CanAttack())
                 InternalAttack();

@@ -3,12 +3,11 @@ using UnityEngine;
 
 namespace TDS.Game.Enemy
 {
-    public class EnemyMoveToPlayer : MonoBehaviour
+    public class EnemyMoveToPlayer : EnemyFollow
     {
         #region Variables
 
-        [SerializeField] private EnemyMovement _enemyMovement;
-        [SerializeField] private TriggerObserver _triggerObserver;
+        [SerializeField] private EnemyMovement _movement;
 
         private Transform _playerTransform;
 
@@ -20,17 +19,17 @@ namespace TDS.Game.Enemy
         private void Start()
         {
             _playerTransform = FindObjectOfType<PlayerHp>().transform;
-            _triggerObserver.OnEntered += OnEntered;
-            _triggerObserver.OnExited += OnExited;
         }
 
-        private void OnEntered(Collider2D col)
+        public override void Activate()
         {
+            base.Activate();
             SetTarget(_playerTransform);
         }
 
-        private void OnExited(Collider2D other)
+        public override void Deactivate()
         {
+            base.Deactivate();
             SetTarget(null);
         }
 
@@ -41,7 +40,7 @@ namespace TDS.Game.Enemy
 
         private void SetTarget(Transform target)
         {
-            _enemyMovement.SetTarget(target);
+            _movement.SetTarget(target);
         }
 
         #endregion

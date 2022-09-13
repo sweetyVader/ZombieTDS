@@ -2,7 +2,7 @@
 
 namespace TDS.Game.Enemy
 {
-    public class EnemyWalk : MonoBehaviour
+    public class EnemyWalk : EnemyIdle
     {
         #region Variables
 
@@ -52,8 +52,7 @@ namespace TDS.Game.Enemy
 
             _cachedTransform.position = Vector2.MoveTowards(_cachedTransform.position,
                 point, _speed * Time.deltaTime);
-            _cachedTransform.position = _cachedTransform.position;
-            if (!(Vector3.Distance(_cachedTransform.position, point) <= 0))
+          if (!(Vector3.Distance(_cachedTransform.position, point) <= 0))
                 return;
             _direction = !_direction;
             _timer = _waitTimer;

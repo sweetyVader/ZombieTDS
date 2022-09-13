@@ -29,13 +29,7 @@ namespace TDS.Game.Objects
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            if (col.gameObject.CompareTag(Tags.Bullet) || col.gameObject.CompareTag(Tags.EnemyBullet) ||
-                col.gameObject.CompareTag(Tags.Enemy) || col.gameObject.CompareTag(Tags.Player))
-
-                if (col.gameObject.CompareTag(Tags.Bullet) || col.gameObject.CompareTag(Tags.EnemyBullet))
-                    Destroy(col);
-
-            _animator.SetTrigger("Explose");
+           _animator.SetTrigger("Explose");
             _timer = 2f;
             _isExplosed = true;
             Explode();

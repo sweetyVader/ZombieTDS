@@ -17,7 +17,10 @@ GameObject:
   - component: {fileID: 4478989789324037131}
   - component: {fileID: 3192132490115690471}
   - component: {fileID: 2199436509349617269}
+  - component: {fileID: 1584147763443361372}
   - component: {fileID: 8424880130219249142}
+  - component: {fileID: 1455151166999984262}
+  - component: {fileID: 5463249265710079075}
   m_Layer: 7
   m_Name: ManEnemy
   m_TagString: Enemy
@@ -116,13 +119,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyHp: {fileID: 4319221244637380606}
   _enemyAnimation: {fileID: 3037246424039566876}
-  _enemyMovement: {fileID: 3192132490115690471}
+  _enemyDirectMovement: {fileID: 5463249265710079075}
   _enemyAttack: {fileID: -2126251402865955466}
   _enemyAttackAgro: {fileID: 8424880130219249142}
   _enemyWalk: {fileID: 2199436509349617269}
   _enemyMoveToPlayer: {fileID: 0}
-  _rb: {fileID: 0}
+  _rb: {fileID: 4478989789324037131}
   _hp: {fileID: 4319221244637380606}
+  _medkitSpawnChance: 1
+  _medkitPrefab: {fileID: -1787822030073918284, guid: f4db8f5d77224e94ba902ad15feee24d, type: 3}
 --- !u!114 &4319221244637380606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65d890d19f84291985ce1b5cdd68c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyWalk: {fileID: 0}
+  _enemyWalk: {fileID: 2199436509349617269}
   _enemyAnimation: {fileID: 3037246424039566876}
   _speed: 4
 --- !u!114 &2199436509349617269
@@ -185,10 +190,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a0aba677e2247ae932dfd648d49517f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
+  _speed: 3.95
   _pointA: {fileID: 7750695741741295923}
   _pointB: {fileID: 8064841705016235301}
   _waitTimer: 3
+--- !u!114 &1584147763443361372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3870537981424237979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0943043714ba481d9de36aeb08ecdabd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8424880130219249142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,7 +220,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _triggerObserver: {fileID: 6001421505335280570}
   _attack: {fileID: -2126251402865955466}
-  _enemyMovement: {fileID: 3192132490115690471}
+  _follow: {fileID: 0}
+--- !u!114 &1455151166999984262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3870537981424237979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38a9569f39d441578960a95ca580dc7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _idle: {fileID: 2199436509349617269}
+--- !u!114 &5463249265710079075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3870537981424237979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b65d890d19f84291985ce1b5cdd68c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyWalk: {fileID: 2199436509349617269}
+  _enemyAnimation: {fileID: 3037246424039566876}
+  _speed: 4
 --- !u!1 &3870537981550115356
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,8 +320,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -26615287
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0833ef51ac90df44e80398feeb871566, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

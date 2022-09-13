@@ -207,8 +207,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -26615287
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e04048c5cc259ae478472c5c2046c9c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -254,13 +254,16 @@ GameObject:
   - component: {fileID: 1830540522907876310}
   - component: {fileID: 8982621525877073804}
   - component: {fileID: 4860782467261417576}
-  - component: {fileID: 7029848665970564982}
   - component: {fileID: 2653677340838983303}
   - component: {fileID: 2474751582659549650}
   - component: {fileID: 3127452889695966289}
   - component: {fileID: 540725565426667999}
   - component: {fileID: 4310803846186876183}
   - component: {fileID: 2558305344718205685}
+  - component: {fileID: 2608516209752889349}
+  - component: {fileID: 5254273137306823255}
+  - component: {fileID: 6530368160400553708}
+  - component: {fileID: 3565654599329832802}
   m_Layer: 7
   m_Name: CopZombie
   m_TagString: Enemy
@@ -350,7 +353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _triggerObserver: {fileID: 5953157718644592070}
   _attack: {fileID: 2558305344718205685}
-  _enemyMovement: {fileID: 2474751582659549650}
+  _follow: {fileID: 2653677340838983303}
 --- !u!114 &4860782467261417576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,19 +368,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startHp: 100
   _maxHp: 200
---- !u!114 &7029848665970564982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5480748540963378560}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b98174e1e1f4cbe8c370f3e1f4b8740, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyMoveToPlayer: {fileID: 2653677340838983303}
 --- !u!114 &2653677340838983303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,8 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04597696eebb4b4e9b2f2751aa3e64d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyMovement: {fileID: 2474751582659549650}
-  _triggerObserver: {fileID: 4801387685127016262}
+  _movement: {fileID: 2474751582659549650}
 --- !u!114 &2474751582659549650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,12 +423,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyHp: {fileID: 4860782467261417576}
   _enemyAnimation: {fileID: 3127452889695966289}
-  _enemyMovement: {fileID: 2474751582659549650}
+  _enemyDirectMovement: {fileID: 3565654599329832802}
   _enemyAttack: {fileID: 2558305344718205685}
   _enemyAttackAgro: {fileID: 8982621525877073804}
   _enemyWalk: {fileID: 4310803846186876183}
   _enemyMoveToPlayer: {fileID: 2653677340838983303}
-  _rb: {fileID: 0}
+  _rb: {fileID: 1830540522907876310}
   _hp: {fileID: 4860782467261417576}
 --- !u!114 &4310803846186876183
 MonoBehaviour:
@@ -477,6 +466,61 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &2608516209752889349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5480748540963378560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0943043714ba481d9de36aeb08ecdabd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5254273137306823255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5480748540963378560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38a9569f39d441578960a95ca580dc7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _idle: {fileID: 4310803846186876183}
+--- !u!114 &6530368160400553708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5480748540963378560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b32ae696b24f1cac8e48aa714973ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _follow: {fileID: 2653677340838983303}
+  _backToIdle: {fileID: 5254273137306823255}
+  _triggerObserver: {fileID: 4801387685127016262}
+--- !u!114 &3565654599329832802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5480748540963378560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b65d890d19f84291985ce1b5cdd68c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyWalk: {fileID: 4310803846186876183}
+  _enemyAnimation: {fileID: 3127452889695966289}
+  _speed: 4
 --- !u!1 &7930192521633017301
 GameObject:
   m_ObjectHideFlags: 0

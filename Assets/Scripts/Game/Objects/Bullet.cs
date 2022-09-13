@@ -29,7 +29,8 @@ namespace TDS.Game.Objects
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            if (col.gameObject.CompareTag(Tags.Player) || col.gameObject.CompareTag(Tags.Enemy))
+            if (col.gameObject.CompareTag(Tags.Player) || col.gameObject.CompareTag(Tags.Enemy) 
+                || col.gameObject.CompareTag(Tags.Barrel))
                 Destroy(gameObject);
                 
         }
