@@ -1,4 +1,5 @@
-﻿using TDS.Game.Player;
+﻿using TDS.Game.Enemy.Base;
+using TDS.Game.Player;
 using UnityEngine;
 
 namespace TDS.Game.Enemy
@@ -6,6 +7,8 @@ namespace TDS.Game.Enemy
     public class EnemyAttackMelee : EnemyAttack
     {
         #region Variables
+
+        [SerializeField] private EnemyAnimation _animation;
 
         [SerializeField] private int _damage = 20;
         [SerializeField] private EnemyAnimation _enemyAnimation;
@@ -17,19 +20,25 @@ namespace TDS.Game.Enemy
         #endregion
 
 
-        #region Private methods
-
-        protected override void InternalAttack()
+        public void PerformDamage()
         {
-            Timer = _attackDelay;
             Collider2D col = Physics2D.OverlapCircle(_attackPoint.position, _radius, _layerMask);
 
             if (col == null)
                 return;
 
-            _enemyAnimation.PlayAttack();
+
             if (col.TryGetComponent(out PlayerHp playerHp))
                 playerHp.ApplyDamage(_damage);
+        }
+
+
+        #region Private methods
+
+        protected override void InternalAttack()
+        {
+            Timer = _attackDelay;
+            _animation.PlayAttack();
         }
 
         #endregion

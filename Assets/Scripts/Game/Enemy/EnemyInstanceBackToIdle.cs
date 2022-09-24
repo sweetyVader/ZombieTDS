@@ -1,4 +1,4 @@
-﻿using System;
+﻿using TDS.Game.Enemy.Base;
 using UnityEngine;
 
 namespace TDS.Game.Enemy
@@ -7,9 +7,12 @@ namespace TDS.Game.Enemy
     {
         [SerializeField] private EnemyIdle _idle;
 
-        private void OnEnable()
+        public override void Activate()
         {
+            base.Activate();
             _idle.Activate();
         }
+
+       
     }
 }

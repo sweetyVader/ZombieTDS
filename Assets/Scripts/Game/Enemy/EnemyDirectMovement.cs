@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TDS.Game.Enemy.Base;
+using UnityEngine;
 
 namespace TDS.Game.Enemy
 {
@@ -7,7 +8,7 @@ namespace TDS.Game.Enemy
     {
         #region Variables
 
-        [SerializeField] private EnemyWalk _enemyWalk;
+        [SerializeField] private EnemyPatrol enemyPatrol;
 
         [SerializeField] private EnemyAnimation _enemyAnimation;
         [SerializeField] private float _speed = 4;
@@ -32,7 +33,7 @@ namespace TDS.Game.Enemy
             if (!IsTargetValid())
                 return;
 
-            _enemyWalk.enabled = false;
+            enemyPatrol.enabled = false;
             MoveToTarget();
             RotateToTarget();
         }
@@ -53,7 +54,7 @@ namespace TDS.Game.Enemy
 
             if (target == null)
             {
-                _enemyWalk.enabled = true;
+                enemyPatrol.enabled = true;
                 SetVelocity(Vector2.zero);
             }
         }
@@ -67,7 +68,6 @@ namespace TDS.Game.Enemy
         {
             Vector3 direction = (_target.position - _cachedTransform.position).normalized;
             SetVelocity(direction * _speed);
-            _enemyAnimation.SetSpeed(_speed);
         }
 
         private void RotateToTarget()
@@ -82,8 +82,11 @@ namespace TDS.Game.Enemy
         private bool IsTargetValid() =>
             _target != null;
 
-        private void SetVelocity(Vector2 velocity) =>
+        private void SetVelocity(Vector2 velocity)
+        {
             _rb.velocity = velocity;
+            SetAnimationSpeed(velocity.magnitude);
+        }
 
         #endregion
     }

@@ -2,7 +2,7 @@
 
 namespace TDS.Game.Enemy
 {
-    public class EnemyStand : EnemyIdle
+    public abstract class EnemyBackToIdle : EnemyBehaviour
     {
         
     }
