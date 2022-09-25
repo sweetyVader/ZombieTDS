@@ -1,3 +1,4 @@
+using TDS.Game.InputServices;
 using UnityEngine;
 
 namespace TDS.Game.Player
@@ -12,8 +13,8 @@ namespace TDS.Game.Player
 
         private Rigidbody2D _rb;
         private Transform _cachedTransform;
-        private Camera _mainCamera;
         private Vector3 _startPosition;
+        private IInputService _inputService;
 
         #endregion
 
@@ -24,7 +25,6 @@ namespace TDS.Game.Player
         {
             _rb = GetComponent<Rigidbody2D>();
             _cachedTransform = transform;
-            _mainCamera = Camera.main;
             _startPosition = _cachedTransform.position;
         }
 
@@ -37,29 +37,27 @@ namespace TDS.Game.Player
         #endregion
 
 
+        #region Public methods
+
+        public void Construct(IInputService inputService) =>
+            _inputService = inputService;
+
+        #endregion
+
+
         #region Private methods
 
         private void Move()
         {
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-
-            Vector2 direction = new Vector2(horizontal, vertical);
+            Vector2 direction = _inputService.Axes;
             Vector3 moveDelta = direction * _speed;
             _rb.velocity = moveDelta;
 
             _playerAnimation.SetSpeed(direction.magnitude);
         }
 
-        private void Rotate()
-        {
-            Vector3 mousePosition = Input.mousePosition;
-            Vector3 worldPoint = _mainCamera.ScreenToWorldPoint(mousePosition);
-            worldPoint.z = 0f;
-
-            Vector3 direction = worldPoint - _cachedTransform.position;
-            _cachedTransform.up = direction;
-        }
+        private void Rotate() =>
+            _cachedTransform.up = _inputService.LookDirection;
 
         private void RestartPosition()
         {

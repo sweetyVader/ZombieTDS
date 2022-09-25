@@ -21,7 +21,7 @@ namespace TDS.Game
                 _health.OnChanged -= HpChanged;
         }
 
-        private void Construct(IHealth health)
+        public void Construct(IHealth health)
         {
             _health = health;
 
