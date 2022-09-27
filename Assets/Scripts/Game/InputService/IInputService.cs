@@ -1,7 +1,7 @@
 ﻿using TDS.Infrastructure;
 using UnityEngine;
 
-namespace TDS.Game.InputServices
+namespace TDS.Game.InputService
 {
     public interface IInputService : IService
     {

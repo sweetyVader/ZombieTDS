@@ -1,4 +1,4 @@
-using TDS.Game.InputServices;
+using TDS.Game.InputService;
 using UnityEngine;
 
 namespace TDS.Game.Player
@@ -49,15 +49,33 @@ namespace TDS.Game.Player
 
         private void Move()
         {
-            Vector2 direction = _inputService.Axes;
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+            Vector2 direction = new Vector2(horizontal, vertical);
             Vector3 moveDelta = direction * _speed;
             _rb.velocity = moveDelta;
-
+            
             _playerAnimation.SetSpeed(direction.magnitude);
+
+            //     Vector2 direction = _inputService.Axes;
+            //     Vector3 moveDelta = direction * _speed;
+            //     _rb.velocity = moveDelta;
+            //
+            //     _playerAnimation.SetSpeed(direction.magnitude);
         }
 
-        private void Rotate() =>
-            _cachedTransform.up = _inputService.LookDirection;
+        private void Rotate()
+        {
+            Vector3 mousePosition = Input.mousePosition;
+            Vector3 worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
+            worldPoint.z = 0f;
+
+            Vector3 direction = worldPoint - _cachedTransform.position;
+            
+            _cachedTransform.up = direction;
+            // _cachedTransform.up = _inputService.LookDirection;
+        }
 
         private void RestartPosition()
         {

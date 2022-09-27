@@ -1,5 +1,7 @@
-﻿using TDS.Game.InputServices;
+﻿using TDS.Game;
+using TDS.Game.InputService;
 using TDS.Game.Player;
+using TDS.Game.UI;
 using TDS.Infrastructure.SceneLoader;
 using UnityEngine;
 
@@ -7,6 +9,7 @@ namespace TDS.Infrastructure.StateMachine
 {
     public class GameState : BaseState
     {
+        private ISceneLoadService _sceneLoad;
         public GameState(IGameStateMachine gameStateMachine) : base(gameStateMachine)
         {
         }
@@ -25,8 +28,19 @@ namespace TDS.Infrastructure.StateMachine
         private void RegisterLocalServices()
         {
             PlayerMovement playerMovement = Object.FindObjectOfType<PlayerMovement>();
+            HUD hud = Object.FindObjectOfType<HUD>();
+            PlayerHp playerHp = Object.FindObjectOfType<PlayerHp>();
+            
             RegisterInputService(playerMovement);
             InitPlayerMovement(playerMovement);
+            InitHUD(hud, playerHp);
+            Win();
+        }
+
+        private void InitHUD(HUD hud, PlayerHp playerHp)
+        {
+            Debug.LogError($"hud {playerHp}");
+            hud.HpBar(playerHp);
         }
 
         private void RegisterInputService(PlayerMovement playerMovement)
@@ -48,6 +62,15 @@ namespace TDS.Infrastructure.StateMachine
         private void UnregisterLocalServices()
         {
             Services.Container.UnRegister<IInputService>();
+        }
+        
+        private void Win()
+        {
+            if (GameObject.FindGameObjectWithTag(Tags.Enemy) != null)
+                return;
+            _sceneLoad.Load("SecondGameScene", OnSceneLoaded);
+            
+            
         }
     }
 }

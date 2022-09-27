@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TDS.Game.InputServices
+namespace TDS.Game.InputService
 {
     public class StandaloneInputService : IInputService
     {
@@ -10,6 +10,7 @@ namespace TDS.Game.InputServices
 
         public Vector3 LookDirection => GetLookDirection();
 
+        
         private Vector3 GetLookDirection()
         {
             Vector3 mousePosition = Input.mousePosition;

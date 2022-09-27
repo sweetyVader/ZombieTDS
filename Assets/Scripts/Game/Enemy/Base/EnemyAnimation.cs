@@ -5,7 +5,7 @@ namespace TDS.Game.Enemy.Base
     public class EnemyAnimation : MonoBehaviour
     {
         private static readonly int Speed = Animator.StringToHash("Speed");
-        private static readonly int IsAttack = Animator.StringToHash("IsAttack");
+        private static readonly int Attack = Animator.StringToHash("Attack");
         private static readonly int Dead = Animator.StringToHash("Dead");
         private static readonly int Shoot = Animator.StringToHash("Shoot");
         
@@ -26,7 +26,7 @@ namespace TDS.Game.Enemy.Base
 
         public void PlayAttack()
         {
-            _animator.SetTrigger(IsAttack);
+            _animator.SetTrigger(Attack);
         }
 
         public void EnemyDead()

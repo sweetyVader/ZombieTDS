@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using TDS.Game.Enemy;
+using TDS.Infrastructure.SceneLoader;
+using TDS.Infrastructure.StateMachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace TDS.Game.Player
 {
@@ -14,7 +16,8 @@ namespace TDS.Game.Player
         [SerializeField] private PlayerMovement _playerMovement;
         [SerializeField] private PlayerAttack _playerAttack;
 
-        private EnemyAttackWithGun _enemyAttackWithGun;
+       private SyncSceneLoadService _sceneLoad;
+        private GameState _gameState;
 
         #endregion
 
@@ -28,10 +31,15 @@ namespace TDS.Game.Player
 
         #region Unity lifecycle
 
-        private void Start()
-        {
-            _enemyAttackWithGun = FindObjectOfType<EnemyAttackWithGun>();
+        private void Start() =>
             _playerHp.OnChanged += OnHpChanged;
+
+        private void Update()
+        {
+            if (_playerHp.CurrentHp > 0)
+                return;
+            IsDead = true;
+            _playerAnimation.PlayerDead(IsDead);
         }
 
         #endregion
@@ -60,27 +68,12 @@ namespace TDS.Game.Player
 
         private void GameOver()
         {
-            SceneLoader.Instance.ReloadCurrentScene();
+            _sceneLoad.Load(SceneManager.GetActiveScene().name, _gameState.Enter);
             IsDead = false;
             _playerAnimation.PlayerDead(IsDead);
         }
 
-        private void OnTriggerEnter2D(Collider2D col)
-        {
-            if (IsDead)
-                return;
-
-            
-
-            if (_playerHp.CurrentHp > 0)
-                _playerHp.ApplyDamage(_enemyAttackWithGun.DamageGun);
-
-            else
-            {
-                IsDead = true;
-                _playerAnimation.PlayerDead(IsDead);
-            }
-        }
+       
 
         #endregion
     }

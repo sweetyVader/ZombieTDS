@@ -9,11 +9,9 @@ namespace TDS.Game.Enemy
         #region Variables
 
         [SerializeField] private EnemyPatrol enemyPatrol;
-
-        [SerializeField] private EnemyAnimation _enemyAnimation;
         [SerializeField] private float _speed = 4;
-
-        private Transform _target;
+        [SerializeField] private Transform _target;
+        // private Transform _target;
         private Rigidbody2D _rb;
         private Transform _cachedTransform;
 
@@ -33,7 +31,7 @@ namespace TDS.Game.Enemy
             if (!IsTargetValid())
                 return;
 
-            enemyPatrol.enabled = false;
+            //enemyPatrol.enabled = false;
             MoveToTarget();
             RotateToTarget();
         }
@@ -54,7 +52,7 @@ namespace TDS.Game.Enemy
 
             if (target == null)
             {
-                enemyPatrol.enabled = true;
+               // enemyPatrol.enabled = true;
                 SetVelocity(Vector2.zero);
             }
         }
@@ -72,10 +70,10 @@ namespace TDS.Game.Enemy
 
         private void RotateToTarget()
         {
-            Vector3 targetPosition = _target.transform.position;
-            targetPosition.z = 0f;
+            // Vector3 targetPosition = _target.transform.position;
+            // targetPosition.z = 0f;
 
-            Vector3 direction = targetPosition - _cachedTransform.position;
+            Vector3 direction = _target.position - _cachedTransform.position;
             _cachedTransform.up = direction;
         }
 
