@@ -21,17 +21,18 @@ namespace TDS.Game.Enemy
             PlayerHp = FindObjectOfType<PlayerHp>();
         }
 
-        private void Update()
-        {
-            TickTimer();
-        }
-
         #endregion
 
 
         protected override void OnUpdate()
         {
             base.OnUpdate();
+            TickTimer();
+        }
+
+        protected override void OnActiveUpdate()
+        {
+            base.OnActiveUpdate();
             Attack();
         }
 

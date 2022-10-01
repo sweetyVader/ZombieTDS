@@ -34,13 +34,6 @@ namespace TDS.Game.Player
         private void Start() =>
             _playerHp.OnChanged += OnHpChanged;
 
-        private void Update()
-        {
-            if (_playerHp.CurrentHp > 0)
-                return;
-            IsDead = true;
-            _playerAnimation.PlayerDead(IsDead);
-        }
 
         #endregion
 
@@ -63,12 +56,13 @@ namespace TDS.Game.Player
             _playerAnimation.PlayerDead(IsDead);
             _playerMovement.enabled = false;
             _playerAttack.enabled = false;
+            //OnHappened?.Invoke();
             StartCoroutine(ReloadScene());
         }
 
         private void GameOver()
         {
-            _sceneLoad.Load(SceneManager.GetActiveScene().name, _gameState.Enter);
+         //   _sceneLoad.Load(SceneManager.GetActiveScene().name, _gameState.Enter);
             IsDead = false;
             _playerAnimation.PlayerDead(IsDead);
         }

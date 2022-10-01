@@ -13,7 +13,7 @@ namespace TDS.Game.Enemy
 
         [SerializeField] private EnemyHp _enemyHp;
         [SerializeField] private EnemyAnimation _enemyAnimation;
-        [SerializeField] private EnemyDirectMovement _enemyDirectMovement;
+        [SerializeField] private EnemyMovement _enemyMovement;
         [SerializeField] private EnemyAttack _enemyAttack;
         [SerializeField] private EnemyAttackAgro _enemyAttackAgro;
         [SerializeField] private EnemyPatrol enemyPatrol;
@@ -25,6 +25,8 @@ namespace TDS.Game.Enemy
         [SerializeField] private Medkit _medkitPrefab;
 
         private PlayerAttack _playerAttack;
+
+        public event Action<EnemyDeath> OnHappend; 
 
         #endregion
 
@@ -56,7 +58,7 @@ namespace TDS.Game.Enemy
 
             IsDead = true;
             _enemyAnimation.EnemyDead();
-            _enemyDirectMovement.enabled = false;
+            _enemyMovement.enabled = false;
             enemyPatrol.enabled = false;
             _enemyAttackAgro.enabled = false;
             _enemyAttack.enabled = false;

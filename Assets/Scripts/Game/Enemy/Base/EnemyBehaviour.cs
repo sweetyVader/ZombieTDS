@@ -8,13 +8,18 @@ namespace TDS.Game.Enemy.Base
 
         private void Update()
         {
+            OnUpdate();
+            
             if (IsActive)
-                OnUpdate();
+                OnActiveUpdate();
         }
 
-        public virtual void Activate() { }
+        public virtual void Activate() =>
+            IsActive = true;
 
-        public virtual void Deactivate() { }
+        public virtual void Deactivate() =>
+            IsActive = false;
+       
         protected virtual void OnUpdate() { }
         protected virtual void OnActiveUpdate() { }
     }

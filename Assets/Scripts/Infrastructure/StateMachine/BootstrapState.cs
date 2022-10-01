@@ -1,4 +1,7 @@
-﻿using TDS.Infrastructure.SceneLoader;
+﻿using TDS.Infrastructure.Coroutine;
+using TDS.Infrastructure.LoadingScreen;
+using TDS.Infrastructure.SceneLoader;
+using UnityEngine;
 
 namespace TDS.Infrastructure.StateMachine
 {
@@ -11,16 +14,12 @@ namespace TDS.Infrastructure.StateMachine
         public override void Enter()
         {
             RegisterAllGlobalServices();
-            ISceneLoadService sceneLoadService = Services.Container.Get<ISceneLoadService>();
-            sceneLoadService.Load("MenuScene", OnSceneLoaded);
+            StateMachine.Enter<MenuState>();
+    
 
             StateMachine.Enter<MenuState>();
         }
 
-        private void OnSceneLoaded()
-        {
-            StateMachine.Enter<MenuState>();
-        }
 
         public override void Exit()
         {
@@ -28,7 +27,20 @@ namespace TDS.Infrastructure.StateMachine
 
         private void RegisterAllGlobalServices()
         {
-            Services.Container.Register<ISceneLoadService>(new SyncSceneLoadService());
+            CreateCoroutineRunner();
+            // Services.Container.Register<ISceneLoadService>(
+            //     new SyncSceneLoadService(Services.Container.Get<ICoroutineRunner>()));
+            Services.Container.Register<ISceneLoadService>(
+                new AsyncSceneLoadService(Services.Container.Get<ICoroutineRunner>()));
+            
+            Services.Container.Register<ILoadingScreenService>(new LoadingScreenService());
+        }
+
+        private void CreateCoroutineRunner()
+        {
+            CoroutineRunner coroutineRunner = new GameObject(nameof(CoroutineRunner)).AddComponent<CoroutineRunner>();
+            Object.DontDestroyOnLoad(coroutineRunner);
+            Services.Container.Register<ICoroutineRunner>(coroutineRunner);
         }
     }
 }

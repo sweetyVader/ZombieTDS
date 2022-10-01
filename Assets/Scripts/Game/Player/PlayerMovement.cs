@@ -30,6 +30,9 @@ namespace TDS.Game.Player
 
         private void Update()
         {
+            if (_inputService == null)
+                return;
+            
             Move();
             Rotate();
         }
@@ -37,7 +40,7 @@ namespace TDS.Game.Player
         #endregion
 
 
-        #region Public methods
+        #region Constructor
 
         public void Construct(IInputService inputService) =>
             _inputService = inputService;
@@ -49,32 +52,16 @@ namespace TDS.Game.Player
 
         private void Move()
         {
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-
-            Vector2 direction = new Vector2(horizontal, vertical);
+            Vector2 direction = _inputService.Axes;
             Vector3 moveDelta = direction * _speed;
             _rb.velocity = moveDelta;
-            
-            _playerAnimation.SetSpeed(direction.magnitude);
 
-            //     Vector2 direction = _inputService.Axes;
-            //     Vector3 moveDelta = direction * _speed;
-            //     _rb.velocity = moveDelta;
-            //
-            //     _playerAnimation.SetSpeed(direction.magnitude);
+            _playerAnimation.SetSpeed(direction.magnitude);
         }
 
         private void Rotate()
         {
-            Vector3 mousePosition = Input.mousePosition;
-            Vector3 worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
-            worldPoint.z = 0f;
-
-            Vector3 direction = worldPoint - _cachedTransform.position;
-            
-            _cachedTransform.up = direction;
-            // _cachedTransform.up = _inputService.LookDirection;
+            _cachedTransform.up = _inputService.LookDirection;
         }
 
         private void RestartPosition()

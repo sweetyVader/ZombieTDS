@@ -18,6 +18,6 @@ namespace TDS.Menu.UI
             _stateMachine = Services.Container.Get<IGameStateMachine>();
 
         private void OnPlayButtonClick() =>
-            _stateMachine.Enter<GameState>();
+            _stateMachine.Enter<GameState, string>("GameScene");
     }
 }

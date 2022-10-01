@@ -8,7 +8,7 @@ namespace TDS.Game.Enemy.Base
     {
         [SerializeField] private EnemyIdle _idle;
 
-        private void Start()
+        public void Begin()
         {
             _idle.Activate();
         }

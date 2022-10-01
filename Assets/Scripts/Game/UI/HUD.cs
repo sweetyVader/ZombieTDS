@@ -7,7 +7,7 @@ namespace TDS.Game.UI
     {
         [SerializeField] private CharacterUI _characterUI;
 
-        public void HpBar(PlayerHp playerHp)
+        public void InitHpBar(PlayerHp playerHp)
         {
             _characterUI.Construct(playerHp);
         }

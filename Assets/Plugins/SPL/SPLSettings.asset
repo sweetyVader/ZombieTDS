@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af0024c8210d1e41b2726bbb1ac120d, type: 3}
+  m_Name: SPLSettings
+  m_EditorClassIdentifier: 
+  NeedOpenSceneOnStart: 1
+  StartScene:
+    Name: BootstrapScene
+    Index: 0
+    Path: Assets/Scenes/BootstrapScene.unity
+    GuidHex: 40a6981c5bd62fa4a922a002615c71a2
+  NeedOpenSceneOnStop: 1
+  StopScene:
+    Name: GameScene
+    Index: 2
+    Path: Assets/Scenes/GameScene.unity
+    GuidHex: 2cda990e2423bbf4892e6590ba056729
+  AllScenes:
+  - Name: BootstrapScene
+    Index: 0
+    Path: Assets/Scenes/BootstrapScene.unity
+    GuidHex: 40a6981c5bd62fa4a922a002615c71a2
+  - Name: MenuScene
+    Index: 1
+    Path: Assets/Scenes/MenuScene.unity
+    GuidHex: d4a2dc13f7573524bac5e4574e293780
+  - Name: GameScene
+    Index: 2
+    Path: Assets/Scenes/GameScene.unity
+    GuidHex: 2cda990e2423bbf4892e6590ba056729
+  - Name: SecondGameScene
+    Index: 3
+    Path: Assets/Scenes/SecondGameScene.unity
+    GuidHex: 4cda039da06aab941bcdcfb54165eb74

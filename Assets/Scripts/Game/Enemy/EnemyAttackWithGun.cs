@@ -1,4 +1,5 @@
-﻿using TDS.Game.Enemy.Base;
+﻿using Lean.Pool;
+using TDS.Game.Enemy.Base;
 using UnityEngine;
 
 namespace TDS.Game.Enemy
@@ -56,7 +57,7 @@ namespace TDS.Game.Enemy
             if (!(Timer <= 0))
                 return;
             _enemyAnimation.PlayShoot();
-            Instantiate(_bulletPrefab, _bulletSpawnPosition.position, _cachedTransform.rotation);
+            LeanPool.Spawn(_bulletPrefab, _bulletSpawnPosition.position, _cachedTransform.rotation);
             Timer = _fireDelay;
         }
 

@@ -9,7 +9,6 @@ namespace TDS.Game.Enemy
         #region Variables
 
         [SerializeField] private EnemyPatrol enemyPatrol;
-        [SerializeField] private float _speed = 4;
         [SerializeField] private Transform _target;
         // private Transform _target;
         private Rigidbody2D _rb;
@@ -65,7 +64,7 @@ namespace TDS.Game.Enemy
         private void MoveToTarget()
         {
             Vector3 direction = (_target.position - _cachedTransform.position).normalized;
-            SetVelocity(direction * _speed);
+            SetVelocity(direction * Speed);
         }
 
         private void RotateToTarget()
