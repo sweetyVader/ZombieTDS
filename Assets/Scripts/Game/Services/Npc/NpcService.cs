@@ -33,12 +33,12 @@ namespace TDS.Game.Npc
         private void Subscribe()
         {
             foreach (EnemyDeath enemyDeath in _enemies)
-                enemyDeath.OnHappend += OnEnemyDead;
+                enemyDeath.OnHappened += OnEnemyDead;
         }
 
         private void OnEnemyDead(EnemyDeath enemyDeath)
         {
-            enemyDeath.OnHappend -= OnEnemyDead;
+            enemyDeath.OnHappened -= OnEnemyDead;
             _enemies.Remove(enemyDeath);
             if (_enemies.Count == 0)
                 OnAllDead?.Invoke();
@@ -47,7 +47,7 @@ namespace TDS.Game.Npc
         private void Unsubscribe()
         {
             foreach (EnemyDeath enemyDeath in _enemies)
-                enemyDeath.OnHappend -= OnEnemyDead;
+                enemyDeath.OnHappened -= OnEnemyDead;
         }
     }
 }

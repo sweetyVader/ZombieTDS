@@ -13,6 +13,8 @@ namespace TDS.Game.Objects
 
         [SerializeField] private float _speed = 10f;
         [SerializeField] private float _lifeTime = 3f;
+        [SerializeField] private int _damage;
+        
 
         private EnemyAttackWithGun _enemyAttackWithGun;
 
@@ -62,7 +64,12 @@ namespace TDS.Game.Objects
             if (col.gameObject.CompareTag(Tags.Player))
             {
                 PlayerHp playerHp = col.gameObject.GetComponent<PlayerHp>();
-                playerHp.ApplyDamage(_enemyAttackWithGun.DamageGun);
+                playerHp.ApplyDamage(_damage);
+            }
+            else if (col.gameObject.CompareTag(Tags.Enemy))
+            {
+                EnemyHp enemyHp = col.gameObject.GetComponent<EnemyHp>();
+                enemyHp.ApplyDamage(_damage);
             }
         }
 

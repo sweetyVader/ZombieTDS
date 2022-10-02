@@ -3,6 +3,7 @@ using TDS.Game.InputService;
 using TDS.Game.Npc;
 using TDS.Game.Player;
 using TDS.Game.UI;
+using TDS.Infrastructure.GameOver;
 using TDS.Infrastructure.LoadingScreen;
 using TDS.Infrastructure.SceneLoader;
 using UnityEngine;
@@ -14,7 +15,9 @@ namespace TDS.Infrastructure.StateMachine
         private ISceneLoadService _sceneLoadService;
         private ILoadingScreenService _loadingScreenService;
         private INpcService _npcService;
+        private IGameOverScreenService _gameOverScreenService;
 
+        
         public GameState(IGameStateMachine gameStateMachine) : base(gameStateMachine)
         {
         }
@@ -38,8 +41,9 @@ namespace TDS.Infrastructure.StateMachine
         }
 
         private void Dispose()
-        {_npcService.Dispose();
-            
+        {
+            if (_npcService != null)
+                _npcService.Dispose();
         }
 
         private void OnSceneLoaded()
@@ -60,12 +64,31 @@ namespace TDS.Infrastructure.StateMachine
             PlayerMovement playerMovement = Object.FindObjectOfType<PlayerMovement>();
             HUD hud = Object.FindObjectOfType<HUD>();
             PlayerHp playerHp = Object.FindObjectOfType<PlayerHp>();
+            PlayerDeath playerDeath = Object.FindObjectOfType<PlayerDeath>();
+            
             _npcService = Services.Container.Register<INpcService>(new NpcService());
+            _gameOverScreenService = Services.Container.Register<IGameOverScreenService>(
+                new GameOverScreenService());
 
             RegisterInputService(playerMovement);
             InitPlayerMovement(playerMovement);
             InitHUD(hud, playerHp);
+            GameOver(playerDeath);
             Win();
+        }
+
+        private void GameOver(PlayerDeath playerDeath)
+        {
+            _gameOverScreenService.IsGameOver(playerDeath, _sceneLoadService, OnSceneLoaded);
+            _gameOverScreenService.OnRestartGame += RestartGame;
+
+        }
+
+        private void RestartGame()
+        {
+            _gameOverScreenService.OnRestartGame -= RestartGame;
+            Exit();
+            Enter("GameScene");
         }
 
         private void InitHUD(HUD hud, PlayerHp playerHp) =>
@@ -82,6 +105,7 @@ namespace TDS.Infrastructure.StateMachine
         {
             Services.Container.UnRegister<IInputService>();
             Services.Container.UnRegisterAndNullRef(ref _npcService);
+            Services.Container.UnRegisterAndNullRef(ref _gameOverScreenService);
         }
 
         private void Win()

@@ -11,7 +11,6 @@ namespace TDS.Game.Player
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _bulletSpawnPosition;
         [SerializeField] private float _fireDelay = 0.3f;
-        [SerializeField] private int _damage;
 
         private Transform _cachedTransform;
         private float _timer;
@@ -19,20 +18,10 @@ namespace TDS.Game.Player
         #endregion
 
 
-        #region Properties
-
-        public int PlayerDamage { get; private set; }
-
-        #endregion
-
-
         #region Unity lifecycle
 
-        private void Awake()
-        {
+        private void Awake() =>
             _cachedTransform = transform;
-            PlayerDamage = _damage;
-        }
 
         private void Update()
         {

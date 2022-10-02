@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using TDS.Game.Enemy;
-using TDS.Infrastructure.SceneLoader;
+﻿using System;
 using TDS.Infrastructure.StateMachine;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace TDS.Game.Player
 {
@@ -15,11 +12,13 @@ namespace TDS.Game.Player
         [SerializeField] private PlayerAnimation _playerAnimation;
         [SerializeField] private PlayerMovement _playerMovement;
         [SerializeField] private PlayerAttack _playerAttack;
-
-       private SyncSceneLoadService _sceneLoad;
+        
         private GameState _gameState;
 
         #endregion
+
+
+        public event Action OnHappened;
 
 
         #region Properties
@@ -34,15 +33,14 @@ namespace TDS.Game.Player
         private void Start() =>
             _playerHp.OnChanged += OnHpChanged;
 
-
         #endregion
-
-
-        IEnumerator ReloadScene()
-        {
-            yield return new WaitForSeconds(5f);
-            GameOver();
-        }
+        //
+        //
+        // IEnumerator ReloadScene()
+        // {
+        //     yield return new WaitForSeconds(5f);
+        //     GameOver();
+        // }
 
 
         #region Private methods
@@ -56,18 +54,16 @@ namespace TDS.Game.Player
             _playerAnimation.PlayerDead(IsDead);
             _playerMovement.enabled = false;
             _playerAttack.enabled = false;
-            //OnHappened?.Invoke();
-            StartCoroutine(ReloadScene());
+            OnHappened?.Invoke();
+           
         }
 
-        private void GameOver()
-        {
-         //   _sceneLoad.Load(SceneManager.GetActiveScene().name, _gameState.Enter);
-            IsDead = false;
-            _playerAnimation.PlayerDead(IsDead);
-        }
-
-       
+        // private void GameOver()
+        // {
+        //     //   _sceneLoad.Load(SceneManager.GetActiveScene().name, _gameState.Enter);
+        //     IsDead = false;
+        //     _playerAnimation.PlayerDead(IsDead);
+        // }
 
         #endregion
     }

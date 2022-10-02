@@ -15,8 +15,6 @@ namespace TDS.Infrastructure.StateMachine
         {
             RegisterAllGlobalServices();
             StateMachine.Enter<MenuState>();
-    
-
             StateMachine.Enter<MenuState>();
         }
 

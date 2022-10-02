@@ -18,7 +18,6 @@ namespace TDS.Game.Enemy
         [SerializeField] private EnemyAttack _enemyAttack;
         [SerializeField] private EnemyAttackAgro _enemyAttackAgro;
         [SerializeField] private EnemyPatrol enemyPatrol;
-     //   [SerializeField] private EnemyMoveToPlayer _enemyMoveToPlayer;
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private EnemyHp _hp;
         [Range(0f, 1f)]
@@ -27,14 +26,7 @@ namespace TDS.Game.Enemy
 
         private PlayerAttack _playerAttack;
 
-        public event Action<EnemyDeath> OnHappend; 
-
-        #endregion
-
-
-        #region Properties
-
-        public bool IsDead { get; private set; }
+        public event Action<EnemyDeath> OnHappened;
 
         #endregion
 
@@ -54,39 +46,15 @@ namespace TDS.Game.Enemy
 
         private void OnHpChanged(int hp)
         {
-            if (IsDead || hp > 0)
+            if (hp > 0)
                 return;
-
-            IsDead = true;
+            OnHappened?.Invoke(this);
             _enemyAnimation.EnemyDead();
             _enemyMovement.enabled = false;
             enemyPatrol.enabled = false;
             _enemyAttackAgro.enabled = false;
             _enemyAttack.enabled = false;
-
-
-            // if (_enemyMoveToPlayer != null)
-            //     _enemyMoveToPlayer.enabled = false;
-            
             SpawnMedkit();
-        }
-
-        private void OnTriggerEnter2D(Collider2D col)
-        {
-            if (IsDead)
-                return;
-
-
-            if (_hp.CurrentHp > 0)
-            {
-                _hp.ApplyDamage(_playerAttack.PlayerDamage);
-            }
-            else
-            {
-                IsDead = true;
-                _enemyAnimation.EnemyDead();
-               
-            }
         }
 
         private void SpawnMedkit()
