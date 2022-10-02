@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Lean.Pool;
+using UnityEngine;
 
 namespace TDS.Game.Objects
 {
@@ -24,7 +25,7 @@ namespace TDS.Game.Objects
             TickTimer();
 
             if (_timer <= 0 && _isExplosed)
-                Destroy(gameObject);
+                LeanPool.Despawn(gameObject);
         }
 
         private void OnTriggerEnter2D(Collider2D col)

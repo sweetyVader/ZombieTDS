@@ -1,4 +1,5 @@
 ﻿using System;
+using Lean.Pool;
 using TDS.Game.Enemy.Base;
 using TDS.Game.Objects;
 using TDS.Game.Player;
@@ -94,7 +95,7 @@ namespace TDS.Game.Enemy
             if (random > _medkitSpawnChance)
                 return;
 
-            Instantiate(_medkitPrefab, transform.position, Quaternion.identity);
+            LeanPool.Spawn(_medkitPrefab, transform.position, Quaternion.identity);
         }
 
         #endregion

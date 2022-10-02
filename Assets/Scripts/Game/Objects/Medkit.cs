@@ -1,4 +1,5 @@
-﻿using TDS.Game.Player;
+﻿using Lean.Pool;
+using TDS.Game.Player;
 using UnityEngine;
 
 namespace TDS.Game.Objects
@@ -25,7 +26,7 @@ namespace TDS.Game.Objects
         {
             if (!col.gameObject.CompareTag(Tags.Player))
                 return;
-            Destroy(gameObject);
+            LeanPool.Despawn(gameObject);
             _playerHp.ApplyHeal(_heal);
         }
 
