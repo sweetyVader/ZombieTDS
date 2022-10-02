@@ -1,4 +1,5 @@
 ﻿using TDS.Game.Enemy.Base;
+using TDS.Game.Player;
 using UnityEngine;
 
 namespace TDS.Game.Enemy
@@ -11,6 +12,7 @@ namespace TDS.Game.Enemy
         [SerializeField] private EnemyMovement _movement;
         [SerializeField] private float _distanceToPoint = 1f;
 
+        private Transform _playerTransform;
         private bool _direction;
         private Transform _cachedTransform;
         private float _timer;
@@ -36,7 +38,8 @@ namespace TDS.Game.Enemy
         public override void Deactivate()
         {
             base.Deactivate();
-            SetTarget(null);
+            _playerTransform = FindObjectOfType<PlayerHp>().transform;
+            SetTarget(_playerTransform);
         }
 
         private void SetTarget(Transform target) =>

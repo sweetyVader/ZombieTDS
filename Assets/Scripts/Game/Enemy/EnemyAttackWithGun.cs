@@ -9,7 +9,6 @@ namespace TDS.Game.Enemy
         #region Variables
 
         [SerializeField] private EnemyAnimation _enemyAnimation;
-        [SerializeField] private EnemyPatrol enemyPatrol;
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _bulletSpawnPosition;
         [SerializeField] private float _fireDelay = 0.3f;
@@ -52,7 +51,6 @@ namespace TDS.Game.Enemy
 
         protected override void InternalAttack()
         {
-            enemyPatrol.enabled = false;
             Rotate();
             if (!(Timer <= 0))
                 return;

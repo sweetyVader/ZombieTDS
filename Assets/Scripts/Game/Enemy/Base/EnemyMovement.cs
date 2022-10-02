@@ -2,7 +2,7 @@
 
 namespace TDS.Game.Enemy.Base
 {
-    public abstract class EnemyMovement : MonoBehaviour
+    public abstract class EnemyMovement : EnemyBehaviour
     {
         [SerializeField] private EnemyAnimation _animation;
         [SerializeField] private float _speed = 4;

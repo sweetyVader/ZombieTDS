@@ -17,7 +17,7 @@ namespace TDS.Game.Enemy
         [SerializeField] private EnemyAttack _enemyAttack;
         [SerializeField] private EnemyAttackAgro _enemyAttackAgro;
         [SerializeField] private EnemyPatrol enemyPatrol;
-        [SerializeField] private EnemyMoveToPlayer _enemyMoveToPlayer;
+     //   [SerializeField] private EnemyMoveToPlayer _enemyMoveToPlayer;
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private EnemyHp _hp;
         [Range(0f, 1f)]
@@ -64,8 +64,8 @@ namespace TDS.Game.Enemy
             _enemyAttack.enabled = false;
 
 
-            if (_enemyMoveToPlayer != null)
-                _enemyMoveToPlayer.enabled = false;
+            // if (_enemyMoveToPlayer != null)
+            //     _enemyMoveToPlayer.enabled = false;
             
             SpawnMedkit();
         }

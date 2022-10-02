@@ -20,7 +20,7 @@ namespace TDS.Game.Enemy
         {
             _currentIndex++;
 
-            if (_currentIndex > _points.Count)
+            if (_currentIndex >= _points.Count)
                 _currentIndex = 0;
         }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Pathfinding;
+using UnityEngine;
 
 namespace TDS.Game.Enemy
 {
@@ -8,7 +9,8 @@ namespace TDS.Game.Enemy
 
         [SerializeField] private TriggerObserver _triggerObserver;
         [SerializeField] private EnemyAttack _attack;
-        [SerializeField] private EnemyFollow _follow;
+        [SerializeField] private AiPathEnemyMovement _aiPathEnemyMovement;
+        [SerializeField] private AIBase _aiPath;
 
         #endregion
 
@@ -29,14 +31,15 @@ namespace TDS.Game.Enemy
 
         private void OnEntered(Collider2D col)
         {
-            _follow.Deactivate();
+            _aiPathEnemyMovement.enabled = false;
+            _aiPath.maxSpeed = 0;
             _attack.Activate();
         }
 
         private void OnExited(Collider2D col)
         {
-            _follow.Activate();
             _attack.Deactivate();
+            _aiPathEnemyMovement.enabled = true;
         }
 
         #endregion
