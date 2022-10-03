@@ -18,7 +18,6 @@ namespace TDS.Infrastructure.StateMachine
             StateMachine.Enter<MenuState>();
         }
 
-
         public override void Exit()
         {
         }
@@ -26,11 +25,10 @@ namespace TDS.Infrastructure.StateMachine
         private void RegisterAllGlobalServices()
         {
             CreateCoroutineRunner();
-            // Services.Container.Register<ISceneLoadService>(
-            //     new SyncSceneLoadService(Services.Container.Get<ICoroutineRunner>()));
+
             Services.Container.Register<ISceneLoadService>(
                 new AsyncSceneLoadService(Services.Container.Get<ICoroutineRunner>()));
-            
+
             Services.Container.Register<ILoadingScreenService>(new LoadingScreenService());
         }
 

@@ -9,7 +9,7 @@ namespace TDS.Infrastructure.PauseScreen
         [SerializeField] private Button _continueButton;
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _exitButton;
-        
+
         public event Action OnContinue;
         public event Action OnRestart;
         public event Action OnExit;

@@ -1,8 +1,10 @@
-﻿namespace TDS.Infrastructure.PauseScreen
+﻿using System;
+
+namespace TDS.Infrastructure.PauseScreen
 {
     public interface IPauseScreenService : IService
     {
-        void ShowScreen();
-        void HideScreen();
+        public event Action OnRestartGame;
+        void InitPauseScreen();
     }
 }

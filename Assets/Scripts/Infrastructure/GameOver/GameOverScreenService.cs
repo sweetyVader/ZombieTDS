@@ -1,6 +1,5 @@
 using System;
 using TDS.Game.Player;
-using TDS.Infrastructure.LoadingScreen;
 using TDS.Infrastructure.SceneLoader;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -11,11 +10,7 @@ namespace TDS.Infrastructure.GameOver
     {
         private const string GameOverScreenPath = "GameOverScreen";
 
-        private ISceneLoadService _sceneLoad;
-        private Action _action;
-        
         private GameObject _gameOverScreen;
-
         private GameOverScreen _screen;
 
         public event Action OnRestartGame;
@@ -23,8 +18,6 @@ namespace TDS.Infrastructure.GameOver
         public void IsGameOver(PlayerDeath playerDeath, ISceneLoadService sceneLoad, Action completeCallback)
         {
             playerDeath.OnHappened += ShowScreen;
-            _sceneLoad = sceneLoad;
-            _action = completeCallback;
         }
 
         public void ShowScreen()
@@ -43,21 +36,13 @@ namespace TDS.Infrastructure.GameOver
             _screen = Object.FindObjectOfType<GameOverScreen>();
         }
 
-        private void RestartGame()
-        {
-            
-            Debug.Log("restart game");
-           // _sceneLoad.Load("GameScene", _action);
+        private void RestartGame() =>
             OnRestartGame?.Invoke();
-            
-            
-        }
 
         private void ExitGame()
         {
             UnityEditor.EditorApplication.isPlaying = false;
             Application.Quit();
         }
-
     }
 }

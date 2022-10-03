@@ -1,5 +1,4 @@
-﻿using System;
-using TDS.Game.UI;
+﻿using TDS.Game.UI;
 using UnityEngine;
 
 namespace TDS.Game

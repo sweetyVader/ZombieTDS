@@ -5,6 +5,7 @@ using TDS.Game.Player;
 using TDS.Game.UI;
 using TDS.Infrastructure.GameOver;
 using TDS.Infrastructure.LoadingScreen;
+using TDS.Infrastructure.PauseScreen;
 using TDS.Infrastructure.SceneLoader;
 using UnityEngine;
 
@@ -15,9 +16,9 @@ namespace TDS.Infrastructure.StateMachine
         private ISceneLoadService _sceneLoadService;
         private ILoadingScreenService _loadingScreenService;
         private INpcService _npcService;
+        private IPauseScreenService _pauseScreenService;
         private IGameOverScreenService _gameOverScreenService;
 
-        
         public GameState(IGameStateMachine gameStateMachine) : base(gameStateMachine)
         {
         }
@@ -26,7 +27,7 @@ namespace TDS.Infrastructure.StateMachine
         {
             Services.Container.Get(out _sceneLoadService);
             Services.Container.Get(out _loadingScreenService);
-            
+
             _loadingScreenService.ShowScreen();
             _sceneLoadService.Load(sceneName, OnSceneLoaded);
         }
@@ -38,6 +39,7 @@ namespace TDS.Infrastructure.StateMachine
 
             _loadingScreenService = null;
             _sceneLoadService = null;
+            _pauseScreenService = null;
         }
 
         private void Dispose()
@@ -65,11 +67,12 @@ namespace TDS.Infrastructure.StateMachine
             HUD hud = Object.FindObjectOfType<HUD>();
             PlayerHp playerHp = Object.FindObjectOfType<PlayerHp>();
             PlayerDeath playerDeath = Object.FindObjectOfType<PlayerDeath>();
-            
+
             _npcService = Services.Container.Register<INpcService>(new NpcService());
             _gameOverScreenService = Services.Container.Register<IGameOverScreenService>(
                 new GameOverScreenService());
 
+            CreatePauseRunner();
             RegisterInputService(playerMovement);
             InitPlayerMovement(playerMovement);
             InitHUD(hud, playerHp);
@@ -77,11 +80,23 @@ namespace TDS.Infrastructure.StateMachine
             Win();
         }
 
+        private void CreatePauseRunner()
+        {
+            _pauseScreenService = new GameObject(nameof(PauseScreenService)).AddComponent<PauseScreenService>();
+            Services.Container.Register(_pauseScreenService);
+            InitPause();
+        }
+
+        private void InitPause()
+        {
+            _pauseScreenService.InitPauseScreen();
+            _pauseScreenService.OnRestartGame += RestartGame;
+        }
+
         private void GameOver(PlayerDeath playerDeath)
         {
             _gameOverScreenService.IsGameOver(playerDeath, _sceneLoadService, OnSceneLoaded);
             _gameOverScreenService.OnRestartGame += RestartGame;
-
         }
 
         private void RestartGame()
@@ -104,7 +119,9 @@ namespace TDS.Infrastructure.StateMachine
         private void UnregisterLocalServices()
         {
             Services.Container.UnRegister<IInputService>();
+            Object.Destroy(_pauseScreenService as Object);
             Services.Container.UnRegisterAndNullRef(ref _npcService);
+            Services.Container.UnRegisterAndNullRef(ref _pauseScreenService);
             Services.Container.UnRegisterAndNullRef(ref _gameOverScreenService);
         }
 
