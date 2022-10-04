@@ -1,5 +1,4 @@
-﻿using TDS.Game;
-using TDS.Game.InputService;
+﻿using TDS.Game.InputService;
 using TDS.Game.Npc;
 using TDS.Game.Player;
 using TDS.Game.UI;
@@ -8,6 +7,7 @@ using TDS.Infrastructure.LoadingScreen;
 using TDS.Infrastructure.PauseScreen;
 using TDS.Infrastructure.SceneLoader;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace TDS.Infrastructure.StateMachine
 {
@@ -59,6 +59,7 @@ namespace TDS.Infrastructure.StateMachine
         private void Initialize()
         {
             _npcService.Init();
+            _npcService.OnAllDead += LoadNextLevel;
         }
 
         private void RegisterLocalServices()
@@ -77,7 +78,6 @@ namespace TDS.Infrastructure.StateMachine
             InitPlayerMovement(playerMovement);
             InitHUD(hud, playerHp);
             GameOver(playerDeath);
-            Win();
         }
 
         private void CreatePauseRunner()
@@ -125,11 +125,14 @@ namespace TDS.Infrastructure.StateMachine
             Services.Container.UnRegisterAndNullRef(ref _gameOverScreenService);
         }
 
-        private void Win()
+        private void LoadNextLevel()
         {
-            if (GameObject.FindGameObjectWithTag(Tags.Enemy) != null)
-                return;
-            _sceneLoadService.Load("SecondGameScene", OnSceneLoaded);
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            Debug.Log($"currentSceneIndex {currentSceneIndex}");
+            string nextScene = SceneContainer.Scenes[currentSceneIndex + 1];
+            Debug.Log($"nextScene is {nextScene}");
+            _sceneLoadService.Load(nextScene, OnSceneLoaded);
+            Exit();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Lean.Pool;
+﻿using System;
+using Lean.Pool;
+using TDS.Game.UI;
 using UnityEngine;
 
 namespace TDS.Game.Player
@@ -14,14 +16,26 @@ namespace TDS.Game.Player
 
         private Transform _cachedTransform;
         private float _timer;
+        private BulletBar _bulletBar;
+        private bool _isEmptyBullet;
+
+        public event Action OnShoot;
 
         #endregion
-
+        public int NumBullet { get; private set; }
 
         #region Unity lifecycle
 
-        private void Awake() =>
+        private void Awake()
+        {
             _cachedTransform = transform;
+            NumBullet = 10;
+            _bulletBar = FindObjectOfType<BulletBar>();
+            _bulletBar.EmptyBullet += CurrentBullet;
+        }
+
+        private void CurrentBullet(bool isEmpty) =>
+            _isEmptyBullet = isEmpty;
 
         private void Update()
         {
@@ -37,11 +51,12 @@ namespace TDS.Game.Player
         #region Private methods
 
         private bool CanAttack() =>
-            Input.GetButton("Fire1") && _timer <= 0;
+            Input.GetButton("Fire1") && _timer <= 0 && !_isEmptyBullet;
 
         private void Attack()
         {
             _playerAnimation.PlayShoot();
+            OnShoot?.Invoke();
             LeanPool.Spawn(_bulletPrefab, _bulletSpawnPosition.position, _cachedTransform.rotation);
             _timer = _fireDelay;
         }

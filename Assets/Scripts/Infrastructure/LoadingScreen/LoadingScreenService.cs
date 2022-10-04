@@ -16,8 +16,11 @@ namespace TDS.Infrastructure.LoadingScreen
             _loadingScreen.SetActive(true);
         }
 
-        public void HideScreen() =>
-            _loadingScreen.SetActive(false);
+        public void HideScreen()
+        {
+            if (_loadingScreen != null)
+                _loadingScreen.SetActive(false);
+        }
 
         private void LoadScreen()
         {

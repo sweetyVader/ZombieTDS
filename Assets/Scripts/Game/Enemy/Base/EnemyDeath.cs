@@ -1,8 +1,8 @@
 ﻿using System;
 using Lean.Pool;
+using Pathfinding;
 using TDS.Game.Enemy.Base;
-using TDS.Game.Objects;
-using TDS.Game.Player;
+using TDS.Game.PickUp;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,17 +14,14 @@ namespace TDS.Game.Enemy
 
         [SerializeField] private EnemyHp _enemyHp;
         [SerializeField] private EnemyAnimation _enemyAnimation;
-        [SerializeField] private EnemyMovement _enemyMovement;
+        [SerializeField] private AIBase _aiPath;
         [SerializeField] private EnemyAttack _enemyAttack;
         [SerializeField] private EnemyAttackAgro _enemyAttackAgro;
         [SerializeField] private EnemyPatrol enemyPatrol;
-        [SerializeField] private Rigidbody2D _rb;
-        [SerializeField] private EnemyHp _hp;
-        [Range(0f, 1f)]
-        [SerializeField] private float _medkitSpawnChance;
-        [SerializeField] private Medkit _medkitPrefab;
 
-        private PlayerAttack _playerAttack;
+        [Range(0f, 1f)]
+        [SerializeField] private float _spawnChance;
+        [SerializeField] private PickUpInfo[] _spawnPrefabs;
 
         public event Action<EnemyDeath> OnHappened;
 
@@ -33,11 +30,8 @@ namespace TDS.Game.Enemy
 
         #region Unity lifecycle
 
-        private void Start()
-        {
+        private void Start() =>
             _enemyHp.OnChanged += OnHpChanged;
-            _playerAttack = FindObjectOfType<PlayerAttack>();
-        }
 
         #endregion
 
@@ -50,20 +44,44 @@ namespace TDS.Game.Enemy
                 return;
             OnHappened?.Invoke(this);
             _enemyAnimation.EnemyDead();
-            _enemyMovement.enabled = false;
+            _aiPath.enabled = false;
             enemyPatrol.enabled = false;
             _enemyAttackAgro.enabled = false;
             _enemyAttack.enabled = false;
-            SpawnMedkit();
+            SpawnPickUp();
         }
 
-        private void SpawnMedkit()
+        private void SpawnPickUp()
         {
-            float random = Random.Range(0f, 1f);
-            if (random > _medkitSpawnChance)
+            if (_spawnPrefabs == null || _spawnPrefabs.Length == 0)
                 return;
 
-            LeanPool.Spawn(_medkitPrefab, transform.position, Quaternion.identity);
+            float random = Random.Range(0f, 1f);
+            if (random > _spawnChance)
+                return;
+            int chanceSum = 0;
+
+            foreach (PickUpInfo pickUpInfo in _spawnPrefabs)
+                chanceSum += pickUpInfo.SpawnChance;
+
+            int randomChance = Random.Range(0, chanceSum);
+            int currentChance = 0;
+            int currentIndex = 0;
+
+            for (int i = 0; i < _spawnPrefabs.Length; i++)
+            {
+                PickUpInfo pickUpInfo = _spawnPrefabs[i];
+                currentChance += pickUpInfo.SpawnChance;
+
+                if (currentChance >= randomChance)
+                {
+                    currentIndex = i;
+                    break;
+                }
+            }
+
+            PickUpBase pickUpPrefab = _spawnPrefabs[currentIndex].PickUpPrefab;
+            LeanPool.Spawn(pickUpPrefab, transform.position, pickUpPrefab.transform.rotation);
         }
 
         #endregion

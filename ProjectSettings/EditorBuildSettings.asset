@@ -16,5 +16,14 @@ EditorBuildSettings:
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/SecondGameScene.unity
-    guid: 4cda039da06aab941bcdcfb54165eb74
+    guid: 644568bcc7d6e6645bbae511aaf09457
+  - enabled: 1
+    path: Assets/Scenes/ThirdGameScene.unity
+    guid: 27ed7ed162f011e4aaf2e3531e2b8a5d
+  - enabled: 1
+    path: Assets/Scenes/FourthGameScene.unity
+    guid: 56e25e7f33210b84da4b1249253cbe80
+  - enabled: 1
+    path: Assets/Scenes/WinScene.unity
+    guid: 574ea9c51c969604c8ea58edfc0705c9
   m_configObjects: {}
